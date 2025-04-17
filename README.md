@@ -1,10 +1,14 @@
 
-# 🚨 Lokari – Lock and Area Intelligent Response Interface. Integrasi Sistem IoT dan AI untuk Deteksi Anomali Aktivitas Ruangan Secara Otomatis dan Efisien dengan Respons Keadaan Darurat
+## 🚨 Lokari – Lock and Area Intelligent Response Interface. Integrasi Sistem IoT dan AI untuk Deteksi Anomali Aktivitas Ruangan Secara Otomatis dan Efisien dengan Respons Keadaan Darurat
 **Kelompok UNI051 – MasiBelajar**
 
 ---
 
-## Struktur Proyek
+### Struktur Proyek
+
+Go to path -> [Link to AI](https://github.com/ergegananputra/UNI051_SIC_MasiBelajar-AiIoT/tree/main/UNI051_SIC_MasiBelajar-AI)
+
+Go to path -> [Link to IoT](https://github.com/ergegananputra/UNI051_SIC_MasiBelajar-AiIoT/tree/main/UNI051_SIC_MasiBelajar-IoT)
 
 ### Artificial Intelligence (AI)
 
@@ -60,19 +64,11 @@ Kode untuk **ESP32-CAM** menggunakan **ESP32 Camera Web Server**. Modul ini digu
 
 ## Anggota Tim – UNI051: *MasiBelajar*
 
-| Nama              | Peran                         |
-|-------------------|-------------------------------|
-| Anggota 1         | Backend & AI Developer        |
-| Anggota 2         | IoT & Embedded Programmer     |
-| Anggota 3         | Mobile App Developer          |
-| Anggota 4         | UI/UX, Dokumentasi & Integrasi|
+| Nama                      |
+|---------------------------|
+| Adiel Boanerge Gananputra |
+| Langit Lintang Radjendra  |
+| Marwah Kamila Ahmad       |
+| Shyra Athaya              |
 
 ---
-
-## Lisensi
-
-Proyek ini dibuat sebagai bagian dari kegiatan pembelajaran dan kompetisi. Silakan gunakan dan kembangkan dengan mencantumkan kredit ke tim **UNI051 – MasiBelajar**.
-
----
-
-Kalau kamu ingin saya buatkan versi README ini dalam bahasa Inggris juga, tinggal bilang aja ya!
