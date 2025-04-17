@@ -3,8 +3,17 @@
 **Kelompok UNI051 – MasiBelajar**
 
 ---
+## Anggota – UNI051: *MasiBelajar*
 
-### Struktur Proyek
+| Nama                      |
+|---------------------------|
+| Adiel Boanerge Gananputra |
+| Langit Lintang Radjendra  |
+| Marwah Kamila Ahmad       |
+| Shyra Athaya              |
+---
+
+### Project Structure
 
 Go to path -> [Link to AI](https://github.com/ergegananputra/UNI051_SIC_MasiBelajar-AiIoT/tree/main/UNI051_SIC_MasiBelajar-AI)
 
@@ -12,7 +21,7 @@ Go to path -> [Link to IoT](https://github.com/ergegananputra/UNI051_SIC_MasiBel
 
 ### Artificial Intelligence (AI)
 
-Kode AI menggunakan **Streamlit** untuk visualisasi dan pengujian model deteksi.
+The AI code uses **Streamlit** for visualizing and testing the detection model.
 
 ```bash
 python -m streamlit run app/streamlit/main.py
@@ -22,31 +31,21 @@ python -m streamlit run app/streamlit/main.py
 
 ### IoT - Lokari Devices
 
-Repositori ini berisi kode untuk perangkat IoT yang terhubung dengan sistem **Lokari**.
+### ESP32 BASE
+MicroPython code that reads temperature and humidity from a DHT11 sensor, checks for changes in readings, and sends the data to Ubidots IoT platform over Wi-Fi. It also controls an LED connected to a PIR sensor.
+#### Core Functionality
+- Wi-Fi connectivity
+- Sensor reading with debounce logic
+- Data push to Ubidots
+- LED hardware interface
 
-#### ESP32 Base (MicroPython)
+### ESP32 CAM
+Arduino (C++) code is for an ESP32-CAM board using the ESP32 Camera Web Server. This is a common setup for streaming camera footage over Wi-Fi using a web browser.
+#### Core Functionality
+- Initializes and configures a camera module (e.g., AI Thinker ESP32-CAM).
+- Connects to Wi-Fi.
+- Starts a web server to stream live video from the camera.
 
-Kode MicroPython untuk ESP32 biasa yang membaca suhu dan kelembaban dari sensor **DHT11**, mendeteksi gerakan dengan **PIR sensor**, serta mengirimkan data ke platform **Ubidots**.
-
-##### Fitur Utama:
-- Koneksi ke Wi-Fi
-- Pembacaan data sensor (DHT11)
-- Debounce logic untuk efisiensi pengiriman data
-- Integrasi ke Ubidots IoT platform
-- Kontrol LED berdasarkan deteksi gerakan
-
----
-
-#### ESP32-CAM (Arduino C++)
-
-Kode untuk **ESP32-CAM** menggunakan **ESP32 Camera Web Server**. Modul ini digunakan untuk live streaming video dari ruangan yang diawasi.
-
-##### Fitur Utama:
-- Inisialisasi dan konfigurasi kamera (AI Thinker ESP32-CAM)
-- Koneksi ke jaringan Wi-Fi
-- Menjalankan web server untuk streaming video secara real-time
-
----
 
 ## Platform & Tools
 
@@ -60,15 +59,3 @@ Kode untuk **ESP32-CAM** menggunakan **ESP32 Camera Web Server**. Modul ini digu
 | IoT Dashboard     | Ubidots                               |
 | PCB Design        | KiCad                                 |
 
----
-
-## Anggota Tim – UNI051: *MasiBelajar*
-
-| Nama                      |
-|---------------------------|
-| Adiel Boanerge Gananputra |
-| Langit Lintang Radjendra  |
-| Marwah Kamila Ahmad       |
-| Shyra Athaya              |
-
----
