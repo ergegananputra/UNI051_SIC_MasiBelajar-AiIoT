@@ -61,3 +61,6 @@ Arduino (C++) code is for an ESP32-CAM board using the ESP32 Camera Web Server. 
 | IoT Dashboard     | Ubidots                               |
 | PCB Design        | KiCad                                 |
 
+## Model Training & Datasets
+[Colab Drive](https://drive.google.com/drive/folders/188knjnuUuJlGTHGljKWBZJ4pL2P6Ahlg?usp=sharing)
+
