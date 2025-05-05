@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "614165058294",
+    "project_id": "uni051",
+    "storage_bucket": "uni051.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:614165058294:android:b6c908469196e81dd8d2d7",
+        "android_client_info": {
+          "package_name": "com.sic6.masibelajar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiwOoQFk0pJ0caskjmdaIo808LJlM1f_A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
