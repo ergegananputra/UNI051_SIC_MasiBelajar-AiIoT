@@ -133,6 +133,13 @@ fun CameraScreen(
                 .verticalScroll(scrollState)
         ) {
             LabeledTextField(
+                label = "Room Name",
+                value = state.roomName,
+                onValueChange = cameraViewModel::setRoomName,
+                keyboardDecimals = false,
+                modifier = Modifier.fillMaxWidth()
+            )
+            LabeledTextField(
                 label = "IP Camera Input",
                 value = state.ipCamera,
                 onValueChange = cameraViewModel::setIpCamera,
@@ -174,16 +181,8 @@ fun CameraScreen(
                             drawPath(
                                 path = path,
                                 color = Color(0xFFFF0000),
-                                style = Stroke(width = 4f)
+                                style = Stroke(width = 40f)
                             )
-
-                            state.points.forEach {
-                                drawCircle(
-                                    color = Color(0xFFFF0000),
-                                    radius = 8f,
-                                    center = Offset(it.x.toFloat(), it.y.toFloat())
-                                )
-                            }
                         }
                     }
                 } else {

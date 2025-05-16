@@ -2,7 +2,9 @@ package com.sic6.masibelajar.di
 
 import android.content.Context
 import com.sic6.masibelajar.data.local.AppDatabase
-import com.sic6.masibelajar.domain.dao.PointDao
+import com.sic6.masibelajar.domain.dao.HistoryDao
+import com.sic6.masibelajar.domain.dao.SharedUserDao
+import com.sic6.masibelajar.domain.entities.SharedUser
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,7 +23,12 @@ object DatabaseModule {
     }
 
     @Provides
-    fun providePointDao(database: AppDatabase): PointDao {
-        return database.pointDao()
+    fun provideSharedUserDao(database: AppDatabase): SharedUserDao {
+        return database.sharedUserDao()
+    }
+
+    @Provides
+    fun provideHistory(database: AppDatabase): HistoryDao {
+        return database.historyDao()
     }
 }

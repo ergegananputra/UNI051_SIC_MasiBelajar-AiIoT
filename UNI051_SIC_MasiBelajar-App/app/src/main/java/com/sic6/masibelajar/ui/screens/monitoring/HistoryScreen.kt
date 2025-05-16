@@ -59,7 +59,7 @@ fun HistoryScreen(
     ) {
         Spacer(modifier = Modifier.height(4.dp))
         Text(
-            text = "Smart Setting",
+            text = "History",
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Medium,
             color = MaterialTheme.colorScheme.onBackground
@@ -95,7 +95,7 @@ fun HistoryScreen(
                     else -> Icons.Default.Person
                 },
                 description = hist.name,
-                time = hist.time,
+                time = hist.time.split(" ")[1],
                 color = when (hist.type) {
                     EventType.FALL, EventType.MISSING -> MaterialTheme.colorScheme.error
                     else -> MaterialTheme.colorScheme.primary

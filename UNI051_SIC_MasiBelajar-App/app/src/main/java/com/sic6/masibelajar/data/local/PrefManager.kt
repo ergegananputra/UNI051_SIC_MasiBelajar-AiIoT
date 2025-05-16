@@ -10,6 +10,14 @@ class PrefManager @Inject constructor(@ApplicationContext context: Context) {
     private val sharedPreferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
     private val editor = sharedPreferences.edit()
 
+    fun setRoomName(name: String) {
+        editor.putString("room_name", name).apply()
+    }
+
+    fun getRoomName(): String {
+        return sharedPreferences.getString("room_name", "Room 1") ?: "Room 1"
+    }
+
     fun setUrl(url: String) {
         editor.putString("url", url).apply()
     }
@@ -36,11 +44,16 @@ class PrefManager @Inject constructor(@ApplicationContext context: Context) {
     }
 
     fun setPoints(points: List<Point>) {
-        editor.putString("points", points.joinToString(",") { "${it.id},${it.x},${it.y}" }).apply()
+        val pointsString = if (points.size < 3) {
+            "0,0,0;1,0,0;2,0,0"
+        } else {
+            points.joinToString(";") { "${it.id},${it.x},${it.y}" }
+        }
+        editor.putString("points", pointsString).apply()
     }
 
     fun getPoints(): List<Point> {
-        val points = sharedPreferences.getString("points", "1,0,0;2,0,0;3,0,0")
+        val points = sharedPreferences.getString("points", "0,0,0;1,0,0;2,0,0")
         return points?.split(";")?.map { segment ->
             val values = segment.split(",").map { it.toInt() }
             Point(values[0], values[1], values[2])
@@ -60,7 +73,16 @@ class PrefManager @Inject constructor(@ApplicationContext context: Context) {
         return sharedPreferences.getString("loggedInEmail", null)
     }
 
+    fun setSharedUser(email : String?) {
+        editor.putString("emailSharedUser", email).apply()
+    }
+
+    fun getSharedUser() : String? {
+        return sharedPreferences.getString("emailSharedUser", null)
+    }
+
     fun clear() {
         editor.clear().apply()
     }
+
 }

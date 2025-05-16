@@ -1,5 +1,6 @@
 package com.sic6.masibelajar.ui.screens.smart.camera
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sic6.masibelajar.data.local.PrefManager
@@ -17,6 +18,7 @@ class CameraViewModel @Inject constructor(
 ) : ViewModel() {
     private val _state = MutableStateFlow(
         CameraScreenState(
+            roomName = "Room 1",
             ipCamera = "",
 //            ipCamera = "ws://10.33.35.199:8000/v1/main-con",
             timeThreshold = 10,
@@ -32,21 +34,28 @@ class CameraViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             _state.value = CameraScreenState(
+                roomName = prefManager.getRoomName(),
                 ipCamera = prefManager.getUrl(),
                 timeThreshold = prefManager.getTimeThreshold(),
                 targetClass = prefManager.getTargetClass(),
                 points = prefManager.getPoints()
             )
         }
+        Log.d("debug", prefManager.getPoints().toString())
     }
 
     fun save() {
         viewModelScope.launch {
+            prefManager.setRoomName(state.value.roomName)
             prefManager.setUrl(state.value.ipCamera)
             prefManager.setTimeThreshold(state.value.timeThreshold)
             prefManager.setTargetClass(state.value.targetClass)
             prefManager.setPoints(state.value.points)
         }
+    }
+
+    fun setRoomName(name: String) {
+        _state.update { it.copy(roomName = name) }
     }
 
     fun setIpCamera(ipCamera: String) {

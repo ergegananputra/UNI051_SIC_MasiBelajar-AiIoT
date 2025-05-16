@@ -21,15 +21,18 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.ChildCare
 import androidx.compose.material.icons.filled.Face4
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -54,6 +57,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.sic6.masibelajar.domain.entities.VideoStreamRequest
 import com.sic6.masibelajar.ui.screens.dashboard.VideoStreamViewModel
+import com.sic6.masibelajar.ui.screens.home.SharedUserViewModel
 import com.sic6.masibelajar.ui.screens.smart.camera.CameraViewModel
 import com.sic6.masibelajar.ui.screens.smart.components.LabeledTextField
 
@@ -69,7 +73,8 @@ fun AlarmScreen(
     navController: NavHostController,
     modifier: Modifier = Modifier,
     videoStreamViewModel: VideoStreamViewModel = viewModel(),
-    cameraViewModel: CameraViewModel = hiltViewModel()
+    cameraViewModel: CameraViewModel = hiltViewModel(),
+    sharedUserViewModel: SharedUserViewModel = hiltViewModel()
 ) {
     val state by cameraViewModel.state.collectAsStateWithLifecycle()
     var fallDetection by remember { mutableStateOf(false) }
@@ -84,6 +89,20 @@ fun AlarmScreen(
         Pair("You", color1),
     ) }
     val context = LocalContext.current
+
+    var showDialog by remember { mutableStateOf(false) }
+
+    // Dialog untuk menambahkan shared user
+    if (showDialog) {
+        SharedUserDialog(
+            onDismiss = { showDialog = false },
+            onSave = { email ->
+                // Tambahkan shared user ke daftar
+                sharedUserEmails.add(Pair(email, color)) // Menambahkan email baru ke dalam list
+                showDialog = false
+            }
+        )
+    }
 
     Scaffold(
         topBar = {
@@ -208,49 +227,91 @@ fun AlarmScreen(
                 style = MaterialTheme.typography.titleMedium
             )
             Spacer(modifier = Modifier.height(8.dp))
-            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                sharedUserEmails.forEach { (name, color) ->
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .size(40.dp)
-                                .clip(CircleShape)
-                                .background(color),
-                            contentAlignment = Alignment.Center
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalAlignment = Alignment.CenterVertically, // penting untuk penyelarasan vertikal
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Column {
+                    sharedUserEmails.forEach { (name, color) ->
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.padding(8.dp)
                         ) {
-                            Text(
-                                text = name.first().uppercase(),
-                                color = MaterialTheme.colorScheme.surface,
-                                style = MaterialTheme.typography.bodyMedium,
-                                textAlign = TextAlign.Center
-                            )
+                            // Avatar
+                            Box(
+                                modifier = Modifier
+                                    .size(40.dp)
+                                    .background(color, CircleShape),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = name.firstOrNull()?.uppercase() ?: "",
+                                    color = Color.White
+                                )
+                            }
+
+                            Spacer(modifier = Modifier.width(8.dp))
+
+                            // Email
+                            Text(name)
                         }
-                        Text(name, fontSize = 12.sp)
                     }
                 }
+
+                // Spacer tidak perlu di sini, karena kita sudah menyelaraskan dengan Alignment.CenterVertically
+
+                // Button sejajar secara vertikal dengan daftar user
                 IconButton(
-                    onClick = { },
+                    onClick = { showDialog = true },
                     modifier = Modifier
-                        .size(48.dp)
-                        .background(
-                            color = MaterialTheme.colorScheme.surfaceContainer,
-                            shape = CircleShape
-                        )
-                        .border(
-                            width = 1.dp,
-                            color = MaterialTheme.colorScheme.outlineVariant,
-                            shape = CircleShape
-                        )
+                        .size(40.dp)
+                        .background(MaterialTheme.colorScheme.primary, CircleShape)
+                        .align(Alignment.CenterVertically) // tambahan opsional jika tidak cukup dengan verticalAlignment
                 ) {
                     Icon(
                         imageVector = Icons.Default.Add,
                         contentDescription = "Add User",
-                        tint = MaterialTheme.colorScheme.onSurface
+                        tint = MaterialTheme.colorScheme.surface
                     )
                 }
             }
+
         }
     }
+}
+
+@Composable
+fun SharedUserDialog(
+    onDismiss: () -> Unit,
+    onSave: (String) -> Unit
+) {
+    var email by remember { mutableStateOf("") }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Tambah Shared User") },
+        text = {
+            OutlinedTextField(
+                value = email,
+                onValueChange = { email = it },
+                label = { Text("Email") }
+            )
+        },
+        confirmButton = {
+            Button(onClick = {
+                if (email.isNotBlank()) {
+                    onSave(email) // Menyimpan email ke daftar shared users
+                    onDismiss()   // Menutup dialog setelah menyimpan
+                }
+            }) {
+                Text("Simpan")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Batal")
+            }
+        }
+    )
 }

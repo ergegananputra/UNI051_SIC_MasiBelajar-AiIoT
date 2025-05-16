@@ -3,6 +3,7 @@ package com.sic6.masibelajar.ui.screens.smart.camera
 import com.sic6.masibelajar.domain.entities.Point
 
 data class CameraScreenState(
+    val roomName : String = "",
     val ipCamera : String = "",
     val timeThreshold : Int = 5,
     val points : List<Point> = listOf(

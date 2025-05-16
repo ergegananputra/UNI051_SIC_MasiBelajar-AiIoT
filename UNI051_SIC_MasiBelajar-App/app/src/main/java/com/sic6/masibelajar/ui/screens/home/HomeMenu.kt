@@ -1,5 +1,14 @@
 package com.sic6.masibelajar.ui.screens.home
 
+import android.Manifest
+import android.app.NotificationManager
+import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
+import android.util.Log
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -21,6 +30,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.DirectionsRun
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Fullscreen
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.SlowMotionVideo
 import androidx.compose.material.icons.outlined.CameraAlt
 import androidx.compose.material.icons.outlined.Info
@@ -48,13 +58,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.sic6.masibelajar.R
+import com.sic6.masibelajar.data.local.PrefManager
 import com.sic6.masibelajar.domain.enums.EventType
 import com.sic6.masibelajar.ui.components.Base64Image
 import com.sic6.masibelajar.ui.screens.dashboard.VideoStreamViewModel
@@ -92,12 +109,21 @@ fun HomeScreen(
         Pair("You", color1),
     ) }
     val scrollState = rememberScrollState()
+    val context = LocalContext.current
+    val initial = remember { mutableStateOf(true) }
 
     LaunchedEffect(history) {
         if (history.isNotEmpty()) {
-            activeWarning.value = history.last().type
+            if (!initial.value) {
+                activeWarning.value = history.last().type
+                showNotification(activeWarning.value, context)
+            } else {
+                initial.value = false
+            }
         }
     }
+
+    NotificationPermissionRequest()
 
     if (activeWarning.value == EventType.FALL) {
         AlertDialogComponent(
@@ -138,7 +164,7 @@ fun HomeScreen(
                     color = MaterialTheme.colorScheme.outline
                 )
                 Text(
-                    text = "Restroom DTEDI Lt.2",
+                    text = PrefManager(navController.context).getRoomName(),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold
                 )
@@ -367,7 +393,6 @@ fun SharedUsersSection(sharedUsers: List<Pair<String, Color>>, onAddUser: () -> 
     }
 }
 
-
 @Composable
 fun AlertDialogComponent(
     title: String,
@@ -458,4 +483,54 @@ fun AddUserDialog(
     )
 }
 
+fun showNotification(type: EventType, context: Context) {
+    val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
+    val title = when (type) {
+        EventType.FALL -> "Fall detected"
+        EventType.MISSING -> "Missing detected"
+        else -> ""
+    }
+
+    val message = when (type) {
+        EventType.FALL -> "Fall detected! Please check immediately!"
+        EventType.MISSING -> "Person detected in the Safezone for an extended time"
+        else -> ""
+    }
+
+    val notification = NotificationCompat.Builder(context, "lokari_notification")
+        .setSmallIcon(R.drawable.lokari_logo)
+        .setContentTitle(title)
+        .setContentText(message)
+        .setStyle(NotificationCompat.BigTextStyle().bigText(message))
+        .setPriority(NotificationCompat.PRIORITY_HIGH)
+        .build()
+
+    notificationManager.notify(1, notification)
+}
+
+@Composable
+fun NotificationPermissionRequest() {
+    val context = LocalContext.current
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            Toast.makeText(context, "Permission granted", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Permission denied", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    val shouldShowPermission = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+
+    LaunchedEffect(Unit) {
+        if (shouldShowPermission && ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+    }
+}
