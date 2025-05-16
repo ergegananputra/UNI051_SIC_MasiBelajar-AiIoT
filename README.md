@@ -19,6 +19,8 @@ Go to path -> [Link to AI](https://github.com/ergegananputra/UNI051_SIC_MasiBela
 
 Go to path -> [Link to IoT](https://github.com/ergegananputra/UNI051_SIC_MasiBelajar-AiIoT/tree/main/UNI051_SIC_MasiBelajar-IoT)
 
+Go to path -> [Link to App](https://github.com/ergegananputra/UNI051_SIC_MasiBelajar-AiIoT/tree/main/UNI051_SIC_MasiBelajar-App)
+
 ### Artificial Intelligence (AI)
 
 The AI code uses **Streamlit** for visualizing and testing the detection model.
@@ -58,4 +60,7 @@ Arduino (C++) code is for an ESP32-CAM board using the ESP32 Camera Web Server. 
 | Coding IDE        | VS Code, Thonny                       |
 | IoT Dashboard     | Ubidots                               |
 | PCB Design        | KiCad                                 |
+
+## Model Training & Datasets
+[Colab Drive](https://drive.google.com/drive/folders/188knjnuUuJlGTHGljKWBZJ4pL2P6Ahlg?usp=sharing)
 
