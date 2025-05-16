@@ -48,6 +48,27 @@ Arduino (C++) code is for an ESP32-CAM board using the ESP32 Camera Web Server. 
 - Connects to Wi-Fi.
 - Starts a web server to stream live video from the camera.
 
+### App - Lokari Apps
+
+**Lokari** adalah aplikasi Android yang dikembangkan menggunakan **Android Studio** sebagai bagian dari solusi sistem AIoT untuk pemantauan ruang tertutup seperti kamar mandi. Aplikasi ini berfungsi sebagai pusat kontrol dan notifikasi pengguna, terintegrasi dengan sensor dan kamera berbasis ESP32.
+
+#### Fitur Utama:
+- **Real-time Notification**  
+  Menerima peringatan langsung jika terjadi deteksi jatuh atau seseorang terlalu lama di dalam ruangan.
+
+- **Riwayat Aktivitas**  
+  Menampilkan log aktivitas pengguna di zona pantau, termasuk durasi keberadaan dan waktu masuk/keluar.
+
+- **Live Monitoring**  
+  Menyediakan akses tampilan kamera real-time dari perangkat ESP32-CAM di area pemantauan.
+  
+#### Teknologi:
+- **Android Studio**: IDE utama pengembangan aplikasi.
+- **Jetpack Compose**: Untuk antarmuka.
+- **Room Database**: Menyimpan data pengguna dan konfigurasi secara lokal.
+- **Firebase/Custom Server API**: Untuk autentikasi dan komunikasi dengan perangkat IoT.
+
+Aplikasi Lokari bertujuan meningkatkan keamanan tanpa mengganggu privasi, serta mempercepat respons terhadap potensi insiden di ruang tertutup.
 
 ## Platform & Tools
 
